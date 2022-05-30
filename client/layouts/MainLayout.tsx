@@ -1,9 +1,8 @@
-import React, { ReactChild, ReactFragment, ReactPortal, useEffect } from 'react';
+import React, { ReactChild, ReactFragment, ReactPortal, useEffect } from "react";
 import Navbar from "../components/Navbar/Navbar";
-import {Container} from "@mui/material";
+import { Container } from "@mui/material";
 import Head from "next/head";
-import Player from '../components/Player/Player';
-import { useRouter } from 'next/router';
+import Player from "../components/Player/Player";
 
 type ReactNode = ReactChild | ReactFragment | ReactPortal | boolean | null | undefined;
 
@@ -16,28 +15,22 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps>
   = ({
-       children=[],
+       children = [],
        title,
        description,
        keywords
      }) => {
 
-  const router = useRouter();
-
-  useEffect(()=>{
-    console.log(router.pathname)
-  }, [router.pathname]);
-
   return (
     <>
       <Head>
-        <title>{title || 'Music Platform'}</title>
+        <title>{title || "Music Platform"}</title>
       </Head>
-      <Navbar/>
-      <Container style={{margin: '90px 0'}}>
+      <Navbar />
+      <Container style={{ margin: "90px 0", display: "flex", flexFlow: "column nowrap", alignItems: "center" }}>
         {children}
       </Container>
-      {router.pathname !== '/' && <Player/> }
+      <Player />
     </>
   );
 };

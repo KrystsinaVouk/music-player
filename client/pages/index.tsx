@@ -4,7 +4,7 @@ import MainLayout from '../layouts/MainLayout'
 
 const Index = () => {
   return (
-    <MainLayout>
+    <MainLayout title={`Music platform - Tracks`}>
       <>
         <Navbar />
         <div className={'center'}>
