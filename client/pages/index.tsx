@@ -1,31 +1,21 @@
 import { Button } from "@mui/material";
-import Navbar from '../components/Navbar/Navbar'
-import MainLayout from '../layouts/MainLayout'
+import { useRouter } from "next/router";
+import React from "react";
+import CustomButton from "../components/CustomButton/CustomButton";
+import Navbar from "../components/Navbar/Navbar";
+import MainLayout from "../layouts/MainLayout";
 
 const Index = () => {
+  const router = useRouter();
+
   return (
     <MainLayout title={`Music platform - Tracks`}>
-      <>
-        <Navbar />
-        <div className={'center'}>
-          <h1>Welcome!</h1>
-          <h3>Here all the best track go !</h3>
-        </div>
-
-        <style jsx>
-          {`
-          .center {
-             margin-top: 150px;
-             display: flex;
-             flex-direction: column;
-             align-items: center;
-             justify-content: center;
-          }
-
-        `}
-
-        </style>
-      </>
+      <Navbar />
+      <div className={"center"}>
+        <h1>Welcome!</h1>
+        <h3>Here all the best track go !</h3>
+        <CustomButton onClick={() => router.push("/tracks")}>Explore</CustomButton>
+      </div>
     </MainLayout>
   );
 };

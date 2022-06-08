@@ -8,6 +8,8 @@ export const useInput = (initialValue) => {
   }
 
   return {
-    value, onChange
+    value,
+    setValue,
+    onChange
   }
 }

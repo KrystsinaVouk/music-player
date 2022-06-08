@@ -1,0 +1,13 @@
+.trackListContainer {
+    width: 900;
+    background-color:#ffcaca;
+}
+
+.grid {
+    padding: 0 40px;
+}
+
+.grid > .search {
+    margin-top: 20px;
+    box-shadow: 5px 6px 10px
+}

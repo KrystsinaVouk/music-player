@@ -1,6 +1,7 @@
 import { Card, Container, Grid, Step, StepLabel, Stepper } from "@mui/material";
 import React, { ReactElement, ReactNode } from "react";
 import MainLayout from "../../layouts/MainLayout";
+import styles from "./StepWrapper.module.css";
 
 interface StepWrapperProps {
   activeStep: number;
@@ -16,15 +17,16 @@ const StepWrapper: React.FC<StepWrapperProps> = ({ activeStep, children }) => {
         <Stepper>
           {steps.map((step, index) =>
             <Step
+              color={'secondary'}
               key={index}
               completed={activeStep > index}
             >
-              <StepLabel>{step}</StepLabel>
+              <StepLabel className={styles.stepLabel}>{step}</StepLabel>
             </Step>
           )}
         </Stepper>
       </Container>
-      <Grid container justifyContent={"center"} style={{ margin: "70px 0", height: 270 }}>
+      <Grid container justifyContent={"center"} className={styles.grid}>
         <Card style={{ width: 600 }}>
           {children}
         </Card>

@@ -1,0 +1,7 @@
+.container {
+    margin: 64px 0 24px 0;
+    padding: 0 24px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}

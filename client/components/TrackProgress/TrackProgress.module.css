@@ -1,0 +1,21 @@
+.duration {
+    display: flex;
+    width: 100%;
+}
+
+.volume {
+    display: flex;
+    width: 35%;
+    justify-content: space-evenly;
+}
+
+
+.duration > input {
+    width: 80%;
+}
+
+.volume > input {
+
+}
+
+

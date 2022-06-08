@@ -1,0 +1,14 @@
+body {
+    width: 100%;
+    height: 100vh;
+    background: #b67474;
+    font-family: "Oswald", sans-serif !important;
+}
+
+ .center {
+    margin-top: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

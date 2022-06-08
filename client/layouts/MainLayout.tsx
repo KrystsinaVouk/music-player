@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar/Navbar";
 import { Container } from "@mui/material";
 import Head from "next/head";
 import Player from "../components/Player/Player";
+import styles from "./MainLayout.module.css" ;
 
 type ReactNode = ReactChild | ReactFragment | ReactPortal | boolean | null | undefined;
 
@@ -27,7 +28,7 @@ const MainLayout: React.FC<MainLayoutProps>
         <title>{title || "Music Platform"}</title>
       </Head>
       <Navbar />
-      <Container style={{ margin: "90px 0", display: "flex", flexFlow: "column nowrap", alignItems: "center" }}>
+      <Container className={styles.container}>
         {children}
       </Container>
       <Player />

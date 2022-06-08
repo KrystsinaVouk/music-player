@@ -1,33 +1,22 @@
-import React, { useState } from "react";
-import MainLayout from "../../layouts/MainLayout";
-import { Box, Button, Card, Grid, TextField } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+import { Box, Button, Card, Grid, IconButton, Input, InputAdornment, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import TrackList from "../../components/TrackList/TrackList";
+import { useDispatch } from "react-redux";
+import SearchIcon from "@mui/icons-material/Search";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useTracksPage } from "../../hooks/useTracksPage";
 import { NextThunkDispatch, wrapper } from "../../store";
 import { fetchTracks, searchTracks } from "../../store/action-creators/track";
 import { ITrack } from "../../types/track";
-import { useDispatch } from "react-redux";
+import TrackList from "../../components/TrackList/TrackList";
+import CustomButton from "../../components/CustomButton/CustomButton";
+import MainLayout from "../../layouts/MainLayout";
+import styles from "../../styles/TracksPage.module.css";
 
 const TracksPage = () => {
   const router = useRouter();
-  const { tracks, error } = useTypedSelector(state => state.track);
-  const [query, setQuery] = useState("");
-  const [timer, setTimer] = useState(0);
-  const dispatch = useDispatch() as NextThunkDispatch;
-
-  const search = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-    if (timer) {
-      clearTimeout(timer);
-    } else {
-      setTimeout(async () => {
-        await dispatch(await searchTracks(event.target.value));
-      }, 555);
-    }
-  };
-
+  const { error, query, search, tracks } = useTracksPage();
+  
   if (error) {
     return <MainLayout>{error}</MainLayout>;
   }
@@ -35,18 +24,26 @@ const TracksPage = () => {
   return (
     <MainLayout>
       <Grid container justifyContent={"center"}>
-        <Card style={{ width: 900 }}>
+        <Card className={styles.trackListContainer}>
           <Box p={3}>
-            <Grid container justifyContent={"space-between"}>
-              <Typography variant={"h4"}>All Tracks</Typography>
-              <Button onClick={() => router.push("/tracks/create")}>Load tracks</Button>
+            <Grid container justifyContent={"space-between"} className={styles.grid}>
+              <Typography className={styles.h4} variant={"h4"}>All Tracks</Typography>
+              <CustomButton onClick={() => router.push("/tracks/create")}>Upload your track</CustomButton>
               <TextField
+                className={styles.search}
                 fullWidth
                 value={query}
                 onChange={search}
+                InputProps={{
+                  startAdornment: (
+                    <IconButton>
+                      <SearchIcon />
+                    </IconButton>
+                  )
+                }}
               />
-              <TrackList tracks={tracks} />
             </Grid>
+            <TrackList tracks={tracks} />
           </Box>
         </Card>
       </Grid>

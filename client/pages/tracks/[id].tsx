@@ -1,57 +1,25 @@
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import React from "react";
 import axios from "axios";
 import { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { useActions } from "../../hooks/useActions";
-import { useInput } from "../../hooks/useInput";
+import { Button, Grid, TextField, Typography } from "@mui/material";
+import { useSingleTrackPage } from "../../hooks/useSingleTrackPage";
+import CustomButton from "../../components/CustomButton/CustomButton";
 import MainLayout from "../../layouts/MainLayout";
-import { ITrack } from "../../types/track";
+import styles from "../../styles/TrackPage.module.css";
 
 const TrackItemPage = ({ serverTrack }) => {
-  const router = useRouter();
-  const [track, setTrack] = useState(serverTrack);
-  const { setActiveTrack, pauseTrack } = useActions();
-  const comment = useInput("");
-  const username = useInput("");
 
-  const addComment = async () => {
-    try {
-      const response = await axios.post(`http://localhost:5000/tracks/comment`, {
-        username: username.value,
-        text: comment.value,
-        trackId: track._id
-      });
-      setTrack({ ...track, comments: [...track.comments, response.data] });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
- const comeBack =() => {
-   pauseTrack();
-   router.push("/tracks")
- }
-
-  useEffect(() => {
-    setActiveTrack(track);
-  }, [serverTrack]);
+  const { track, comeBack, username, comment, addComment } = useSingleTrackPage(serverTrack);
 
   return (
     <MainLayout
       title={"Music platform - " + track.name + " - " + track.artist}
-      keywords={'Музыка, артисты, ' + track.name + ", " + track.artist}
+      keywords={"Музыка, артисты, " + track.name + ", " + track.artist}
     >
-      <Button
-        variant={"outlined"}
-        style={{ fontSize: 12 }}
-        onClick={comeBack}
-      >
-        Back to all tracks
-      </Button>
-      <Grid container style={{ margin: "20px 0" }}>
-        <img src={`http://localhost:5000/${track.picture}`} width={300} height={300} />
-        <div style={{ marginLeft: 30 }}>
+      <CustomButton className={styles.btn} onClick={comeBack}>Back to all tracks</CustomButton>
+      <Grid container className={styles.margin}>
+        <img className={styles.shadow} src={`http://localhost:5000/${track.picture}`} width={300} height={300} />
+        <div className={styles.boxDescription}>
           <Typography variant={"h4"}>Track Title - {track.name}</Typography>
           <Typography variant={"h4"}>Track Artist - {track.artist}</Typography>
           <Typography color={"secondary"} variant={"body1"}>Number of listens: {track.listens}</Typography>
@@ -59,26 +27,34 @@ const TrackItemPage = ({ serverTrack }) => {
       </Grid>
       <Typography variant={"h5"}>Lyrics</Typography>
       <p>{track.text}</p>
-      <Typography style={{alignSelf:'flex-start'}} variant={"h6"}>Comments</Typography>
+      <Typography className={styles.alignSelf} variant={"h6"}>Comments</Typography>
       <Grid container>
         <TextField
-          {...username}
+          value={username.value}
+          onChange={username.onChange}
           label="Your name"
           fullWidth
+          className={styles.textField}
+          color="secondary"
+          margin="dense"
         />
         <TextField
-          {...comment}
+          value={comment.value}
+          onChange={comment.onChange}
           label="Your comment"
           fullWidth
           multiline
           rows={4}
+          className={styles.textField}
+          color="secondary"
+          margin="dense"
         />
-        <Button onClick={addComment}>Post Comment</Button>
+        <CustomButton className={styles.btn} onClick={addComment}>Post Comment</CustomButton>
       </Grid>
-      <div style={{alignSelf:'flex-start'}}>
+      <div className={styles.commentsList}>
         {track.comments?.map(comment =>
           <div key={comment._id}>
-            <div><i>The author</i> - <strong>{comment.username}</strong> </div>
+            <div><i>The author</i> - <strong>{comment.username}</strong></div>
             <div><i>The comment</i> - {comment.text}</div>
           </div>
         )}

@@ -1,5 +1,5 @@
 import { Box, Grid } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { ITrack } from "../../types/track";
@@ -12,14 +12,23 @@ interface TrackListProps {
 const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
   const { setActiveTrack, pauseTrack } = useActions();
   const { active } = useTypedSelector(state => state.player);
+  const [chosenTracks, setChosenTracks] = useState(tracks);
 
   useEffect(() => {
-    console.log({ active });
-    if(!active){
+    if (!active) {
       pauseTrack();
     }
   }, []);
-  
+
+  const setChosenTrack = (trackId) => {
+/*    const newTracks = chosenTracks.map((track: ITrack) => {
+      if (track._id === trackId) {
+        return { ...track, chosen: !track.chosen };
+      } else return { ...track, chosen: false  };
+    });
+    setChosenTracks(newTracks);*/
+  };
+
   return (
     <Grid container direction="column">
       <Box p={2}>
@@ -27,6 +36,7 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
           <TrackItem
             key={track._id}
             track={track}
+            setChosenTrack={setChosenTrack}
           />
         )}
       </Box>

@@ -12,7 +12,8 @@ export interface ITrack {
   listens: number;
   picture: string;
   audio: string;
-  comments: IComment[]
+  comments: IComment[],
+  chosen?: boolean
 }
 
 export interface TrackState {
@@ -35,4 +36,6 @@ interface FetchTracksErrorAction {
   payload: string
 }
 
-export type TrackAction = FetchTracksAction | FetchTracksErrorAction
+
+
+export type TrackAction = FetchTracksAction | FetchTracksErrorAction;

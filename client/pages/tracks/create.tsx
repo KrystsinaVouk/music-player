@@ -7,7 +7,7 @@ const Create = () => {
 
   return (
     <MainLayout>
-      <Typography variant={"h3"}>Track Upload</Typography>
+      <Typography lineHeight={2.4} variant={"h3"}>Track Upload</Typography>
       <StepWrapperForm />
     </MainLayout>
   );

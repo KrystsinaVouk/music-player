@@ -1,0 +1,8 @@
+.grid {
+    margin: 70px 0;
+    height: 270px;
+ }
+
+ .stepLabel svg {
+    color: #1a0202 !important;
+ }

@@ -20,30 +20,24 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import AppBar from "@mui/material/AppBar";
 import { useRouter } from "next/router";
+import styles from "./Navbar.module.css";
+import { useNavbar } from "./useNavbar";
 
 const drawerWidth = 240;
 const menuItems = [
-  {text: 'Home', href: '/'},
-  {text: 'Tracks', href: '/tracks'},
-  {text: 'Albums', href: '/albums'},
-]
+  { text: "Home", href: "/" },
+  { text: "Tracks", href: "/tracks" },
+  { text: "Albums", href: "/albums" }
+];
 
 export default function Navbar() {
-  const [open, setOpen] = React.useState(false);
-  const router = useRouter();
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const { open, router, handleDrawerClose, handleDrawerOpen } = useNavbar();
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" style={{background:`#371e1e`}}>
+      <AppBar position="fixed" className={styles.navbar}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -70,9 +64,9 @@ export default function Navbar() {
           </IconButton>
         </div>
         <List>
-          {menuItems.map(({href, text}, index) => (
-            <ListItem key={href}  disablePadding>
-              <ListItemButton onClick={() => router.push(href)} >
+          {menuItems.map(({ href, text }, index) => (
+            <ListItem key={href} disablePadding>
+              <ListItemButton onClick={() => router.push(href)}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>

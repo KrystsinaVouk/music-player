@@ -1,61 +1,18 @@
 import { Pause, PlayArrow, VolumeUp } from "@mui/icons-material";
 import { Grid, IconButton } from "@mui/material";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { useActions } from "../../hooks/useActions";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { ITrack } from "../../types/track";
-import styles from "../Player/Player.module.scss";
+import styles from "../Player/Player.module.css";
 import TrackProgress from "../TrackProgress/TrackProgress";
+import { usePlayer } from "./usePLayer";
 
-let audio;
 
 const Player = () => {
-  const { pause, active, volume, duration, currentTime } = useTypedSelector(state => state.player);
-  const { playTrack, pauseTrack, setVolume, setActiveTrack, setCurrentTime, setDuration } = useActions();
+  const router = useRouter();
+  const { active, audio, pause, currentTime, duration, play, volume, changeCurrentTime, changeVolume } = usePlayer();
 
-  useEffect(() => {
-    if (!audio) {
-      audio = new Audio();
-    } else {
-      console.log(pause);
-      setAudio();
-      play()
-    }
-  }, [active]);
-
-  const setAudio = () => {
-    if (active) {
-      audio.src = `http://localhost:5000/${active.audio}`;
-      audio.volume = volume / 100;
-      audio.onloadedmetadata = () => {
-        setDuration(Math.ceil(audio.duration));
-      };
-      audio.ontimeupdate = () => {
-        setCurrentTime(Math.ceil(audio.currentTime));
-      };
-    }
-  };
-
-  const play = () => {
-    if (pause) {
-      playTrack();
-      audio.play();
-    } else {
-      pauseTrack();
-      audio.pause();
-    }
-  };
-
-  const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-    audio.volume = Number(e.target.value) / 100;
-    setVolume(Number(e.target.value));
-  };
-  const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    audio.currentTime = Number(e.target.value);
-    setCurrentTime(Number(e.target.value));
-  };
-
-  if (!active) {
+  if (!active || router.pathname === "/") {
     audio?.pause();
     return null;
   }
@@ -72,9 +29,9 @@ const Player = () => {
         <div>{active?.name}</div>
         <div style={{ fontSize: 12, color: "gray" }}>{active?.artist}</div>
       </Grid>
-      <TrackProgress left={currentTime} right={duration} onChange={changeCurrentTime} />
+      <TrackProgress left={currentTime} right={duration} onChange={changeCurrentTime} style={'duration'} />
       <VolumeUp style={{ marginLeft: "auto" }} />
-      <TrackProgress left={volume} right={100} onChange={changeVolume} />
+      <TrackProgress left={volume} right={100} onChange={changeVolume} style={'volume'} />
     </div>
   );
 };

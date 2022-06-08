@@ -30,3 +30,15 @@ export const searchTracks = (query: string) => {
     }
   };
 };
+
+export const deleteTrack = (trackId: string) => {
+  return async (dispatch: Dispatch<TrackAction>) => {
+    try {
+      await axios.delete("http://localhost:5000/tracks/" + trackId);
+      const updatedData = await axios.get("http://localhost:5000/tracks");
+      dispatch({ type: TrackActionTypes.FETCH_TRACKS, payload: updatedData.data });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
