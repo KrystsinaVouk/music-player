@@ -27,7 +27,7 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, setChosenTrack }) => {
           }
         </IconButton>
         <a className={styles.card}>
-          <img className={styles.pic} width={70} height={70} src={`http://localhost:5000/${track.picture}`} />
+          <img alt={`track cover icon`} className={styles.pic} width={70} height={70} src={`http://localhost:5000/${track.picture}`} />
           <Grid container direction="column" style={{ width: 200, margin: "0 20px" }}>
             <div>{track.name}</div>
             <div style={{ fontSize: 12, color: "gray" }}>{track.artist}</div>

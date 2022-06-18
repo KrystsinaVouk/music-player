@@ -18,7 +18,7 @@ const TrackItemPage = ({ serverTrack }) => {
     >
       <CustomButton className={styles.btn} onClick={comeBack}>Back to all tracks</CustomButton>
       <Grid container className={styles.margin}>
-        <img className={styles.shadow} src={`http://localhost:5000/${track.picture}`} width={300} height={300} />
+        <img alt={`track cover`} className={styles.shadow} src={`http://localhost:5000/${track.picture}`} width={300} height={300} />
         <div className={styles.boxDescription}>
           <Typography variant={"h4"}>Track Title - {track.name}</Typography>
           <Typography variant={"h4"}>Track Artist - {track.artist}</Typography>
